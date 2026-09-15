@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Travel Finder Italia: ricerca di agenzie di viaggio e tour operator con Google Maps tramite SerpAPI." />
+  <title>Travel Finder Italia</title>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">TF</div><div><div class="brand-title">Travel Finder</div><div class="brand-subtitle">Italia • Google Maps / SerpAPI</div></div></div>
+      <section class="panel filter-panel">
+        <div class="section-title">Ricerca attività</div>
+        <label for="activityType">Tipo attività</label>
+        <select id="activityType"><option value="all">Agenzie + Tour operator</option><option value="agency">Agenzie di viaggio</option><option value="operator">Tour operator</option></select>
+        <label for="region">Regione</label>
+        <select id="region"><option value="">Tutta Italia</option></select>
+        <label for="province">Provincia</label>
+        <input id="province" type="text" placeholder="es. Terni, Roma, Milano…" autocomplete="off" />
+        <label for="city">Comune / città</label>
+        <input id="city" type="text" placeholder="es. Terni" autocomplete="off" />
+        <label for="keyword">Parola chiave</label>
+        <input id="keyword" type="text" placeholder="es. incoming, crociere, business…" autocomplete="off" />
+        <div class="helper">Per tutta Italia il sito usa una ricerca per regione. Di default 8 aree vengono interrogate in parallelo, ma la quota mensile e il limite orario SerpAPI vengono rispettati automaticamente.</div>
+        <button id="searchBtn" class="primary-btn">🔎 Cerca</button>
+        <button id="clearBtn" class="ghost-btn">↺ Azzera filtri</button>
+      </section>
+      <section class="panel stats-panel"><div class="stats-row"><div><span class="stat-label">Risultati</span><strong id="resultCount">0</strong></div><div><span class="stat-label">Mostrati</span><strong id="shownCount">0</strong></div></div><div class="status" id="status">Pronto per una nuova ricerca.</div><div class="status" id="quotaText">SerpAPI: controllo quota…</div></section>
+      <section class="panel export-panel"><div class="section-title">Esporta risultati</div><div class="export-grid"><button id="csvBtn" class="secondary-btn">CSV</button><button id="xlsxBtn" class="secondary-btn">Excel</button></div><div class="helper">Puoi esportare anche mentre la ricerca continua.</div></section>
+      <footer class="sidebar-footer"><div>Dati attività: Google Maps tramite SerpAPI</div><div>Mappa: OpenStreetMap</div></footer>
+    </aside>
+    <main class="main-area">
+      <div class="toolbar"><div class="toolbar-main"><div class="toolbar-title">Elenco attività</div><div class="toolbar-subtitle" id="querySummary">Nessuna ricerca ancora eseguita</div><div class="progress-wrap" id="progressWrap" hidden aria-live="polite"><div class="progress-line"><div class="progress-bar" id="progressBar"></div></div><div class="progress-meta"><span id="progressText">Preparazione…</span><span id="progressCount">0/0</span><button id="cancelSearchBtn" class="cancel-inline" type="button">Annulla</button></div></div></div><div class="toolbar-actions"><label class="compact-toggle"><input type="checkbox" id="onlyContact" /> Solo con contatti</label><label class="compact-toggle"><input type="checkbox" id="onlyWebsite" /> Solo con sito</label></div></div>
+      <div class="content-grid"><section class="results-panel"><div id="searchError" class="error-banner" hidden></div>
+  <div id="results" class="results-list"><div class="empty-state"><div class="empty-icon">🧭</div><h2>Trova agenzie e tour operator</h2><p>Imposta i filtri e premi <b>Cerca</b>. I risultati Google Maps arrivano progressivamente e vengono aggiunti subito alla lista e alla mappa.</p></div></div></section><section class="map-panel"><div id="map"></div></section></div>
+    </main>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="js/regions.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
